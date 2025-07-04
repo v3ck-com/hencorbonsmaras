@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hencor Bonsmaras - Quality Bonsmara Cattle</title>
+    <style>
+        :root {
+            --primary-color: #8B4513; /* SaddleBrown */
+            --secondary-color: #D2B48C; /* Tan */
+            --text-color: #333;
+            --light-gray: #f4f4f4;
+            --white: #fff;
+            --dark-red: #800000; /* Maroon */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-gray);
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 0 20px;
+        }
+
+        header {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 1rem 0;
+            border-bottom: 5px solid var(--dark-red);
+        }
+
+        header a {
+            color: var(--white);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+
+        header ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        header li {
+            display: inline;
+            padding: 0 20px;
+        }
+
+        header #branding {
+            float: left;
+        }
+
+        header #branding h1 {
+            margin: 0;
+        }
+
+        header nav {
+            float: right;
+            margin-top: 10px;
+        }
+
+        #showcase {
+            position: relative;
+            min-height: 400px;
+            text-align: center;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #showcase .container {
+            position: relative;
+        }
+
+        #showcase h1 {
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+
+        #showcase p {
+            font-size: 20px;
+        }
+
+        section {
+            padding: 40px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+
+        #cattle-gallery {
+            background: var(--white);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            background: var(--light-gray);
+        }
+
+        #why-bonsmara {
+            background: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        .qualities {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .quality {
+            width: 30%;
+        }
+
+        .quality h3 {
+            color: var(--primary-color);
+        }
+
+        #contact {
+            background: var(--white);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form input, form textarea {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+        }
+
+        form button {
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: var(--white);
+            border: 0;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        footer {
+            background: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1><a href="#">Hencor Bonsmaras</a></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#showcase">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#cattle-gallery">Our Cattle</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="showcase">
+        <div class="container">
+            <h1>Excellence in Bonsmara Breeding</h1>
+            <p>Top-tier genetics for a profitable herd.</p>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Our Farm</h2>
+            <p>Hencor Bonsmaras is a family-owned and operated farm dedicated to the breeding of high-quality Bonsmara cattle. With decades of experience, we are committed to scientific breeding principles, focusing on fertility, adaptability, and profitability. Our mission is to provide fellow farmers with genetically superior animals that will enhance their herds and improve their bottom line. We believe in the power of the Bonsmara breed and strive to uphold its reputation for excellence.</p>
+        </div>
+    </section>
+
+    <section id="cattle-gallery">
+        <div class="container">
+            <h2 class="section-title">Our Cattle</h2>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <h3>Champion Bull</h3>
+                    <p>Proven genetics, excellent temperament.</p>
+                </div>
+                <div class="gallery-item">
+                    <h3>Top Heifer</h3>
+                    <p>Fertile and adaptable, the future of your herd.</p>
+                </div>
+                <div class="gallery-item">
+                    <h3>Weanling Calf</h3>
+                    <p>Strong and healthy, ready for a new home.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="why-bonsmara">
+        <div class="container">
+            <h2 class="section-title">Why Choose Bonsmara?</h2>
+            <div class="qualities">
+                <div class="quality">
+                    <h3>Adaptability</h3>
+                    <p>Bonsmaras thrive in various climates and conditions, making them a versatile choice for any farm.</p>
+                </div>
+                <div class="quality">
+                    <h3>Fertility</h3>
+                    <p>Known for their high fertility rates, Bonsmaras ensure a productive and growing herd.</p>
+                </div>
+                <div class="quality">
+                    <h3>Meat Quality</h3>
+                    <p>The breed is renowned for its excellent beef quality, with tender and well-marbled meat.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <form>
+                <input type="text" placeholder="Your Name">
+                <input type="email" placeholder="Your Email">
+                <textarea placeholder="Your Message"></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>Hencor Bonsmaras &copy; 2025</p>
+    </footer>
+
+</body>
+</html>
