@@ -154,45 +154,55 @@
         border-bottom: 0;
       }
 
+      .pedigree-wrap {
+        min-width: 0;
+      }
+
       .pedigree-wrap h2 {
-        margin: 0 0 2.2rem;
+        margin: 0 0 0.7rem;
         font-size: 1.5rem;
         font-weight: 900;
       }
 
-      .pedigree {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.8rem;
-        align-items: center;
+      .pedigree-frame {
+        width: 100%;
+        overflow-x: auto;
+        scrollbar-color: var(--hide) #eee;
       }
 
-      .generation {
-        display: grid;
-        gap: 4rem;
+      .mermaid {
+        display: flex;
+        width: 100%;
+        min-width: 520px;
+        margin: 0;
+        justify-content: center;
+        background: #fff;
+        font-family: Arial, Helvetica, sans-serif;
       }
 
-      .generation.tight {
-        gap: 1.35rem;
-      }
-
-      .animal-node {
-        position: relative;
-        min-height: 2.95rem;
-        padding-left: 0.65rem;
-        border-left: 2px solid #111;
-      }
-
-      .animal-node strong {
+      .mermaid svg {
         display: block;
-        font-size: 1rem;
+        width: 100% !important;
+        max-width: none !important;
+        height: auto !important;
       }
 
-      .animal-node span {
-        display: block;
-        margin-top: 0.3rem;
-        font-size: 0.74rem;
-        line-height: 1.35;
+      .mermaid .nodeLabel p {
+        margin: 0;
+        line-height: 1.2;
+      }
+
+      .mermaid .edgeLabel {
+        background: #fff;
+        color: var(--hide);
+        font-weight: 900;
+      }
+
+      .pedigree-hint {
+        display: none;
+        margin: 0 0 0.45rem;
+        color: #62554e;
+        font-size: 0.78rem;
       }
 
       .right {
@@ -401,21 +411,17 @@
           margin-bottom: 1rem;
         }
 
-        .pedigree {
-          grid-template-columns: 1fr;
+        .pedigree-frame {
+          padding-bottom: 0.4rem;
         }
 
-        .generation,
-        .generation.tight {
-          gap: 0.6rem;
+        .mermaid {
+          width: 620px;
+          min-width: 620px;
         }
 
-        .animal-node {
-          min-height: auto;
-          padding: 0.55rem 0.7rem;
-          border: 1px solid #b9aea7;
-          border-left: 4px solid #111;
-          background: var(--muted);
+        .pedigree-hint {
+          display: block;
         }
 
         .value-cards {
@@ -521,8 +527,47 @@
           break-after: auto;
           page-break-after: auto;
         }
+
+        .pedigree-frame,
+        .mermaid {
+          overflow: visible;
+        }
+
+        .mermaid {
+          min-width: 0;
+        }
+
+        .pedigree-hint {
+          display: none;
+        }
       }
     </style>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'
+
+      mermaid.initialize({
+        startOnLoad: true,
+        securityLevel: 'loose',
+        theme: 'base',
+        flowchart: {
+          curve: 'stepAfter',
+          htmlLabels: true,
+          nodeSpacing: 14,
+          rankSpacing: 26,
+          useMaxWidth: true,
+        },
+        themeVariables: {
+          background: '#ffffff',
+          fontFamily: 'Arial, Helvetica, sans-serif',
+          fontSize: '13px',
+          lineColor: '#8c3f2a',
+          primaryBorderColor: '#8c3f2a',
+          primaryColor: '#ffffff',
+          primaryTextColor: '#090909',
+          tertiaryColor: '#f8f4f1',
+        },
+      })
+    </script>
   </head>
   <body>
     <main>
@@ -555,50 +600,32 @@
 
             <section class="pedigree-wrap" aria-label="Pedigree">
               <h2>Hencor Bonsmaras</h2>
-              <div class="pedigree">
-                <div class="generation">
-                  <div class="animal-node"><strong>LAR170339</strong></div>
-                  <div class="animal-node">
-                    <strong>LAR090342</strong>
-                    <span>Oud/Kalw. 16/11<br />Gem.SI/Kalf 100/10<br />TKP 398</span>
-                  </div>
-                </div>
+              <p class="pedigree-hint">Skuif horisontaal om die stamboom te verken.</p>
+              <div class="pedigree-frame">
+                <pre class="mermaid">
+flowchart LR
+  S["Vaar<br/>LAR170339"]
+  D["Moer<br/>LAR090342<br/>Oud/Kalw. 16/11<br/>Gem.SI/Kalf 100/10<br/>TKP 398"]
 
-                <div class="generation">
-                  <div class="animal-node"><strong>LAR140106</strong></div>
-                  <div class="animal-node">
-                    <strong>LAR080168</strong>
-                    <span>Oud/Kalw. 17/11<br />Gem.SI/Kalf 104/10<br />TKP 396</span>
-                  </div>
-                  <div class="animal-node"><strong>LAR060224</strong></div>
-                  <div class="animal-node">
-                    <strong>LAR030276</strong>
-                    <span>Oud/Kalw. 10/8<br />Gem.SI/Kalf 102/7<br />TKP 378</span>
-                  </div>
-                </div>
+  S --> SS["LAR140106"]
+  S --> SD["LAR080168<br/>Oud/Kalw. 17/11<br/>Gem.SI/Kalf 104/10<br/>TKP 396"]
+  D --> DS["LAR060224"]
+  D --> DD["LAR030276<br/>Oud/Kalw. 10/8<br/>Gem.SI/Kalf 102/7<br/>TKP 378"]
 
-                <div class="generation tight">
-                  <div class="animal-node"><strong>AG070457</strong></div>
-                  <div class="animal-node">
-                    <strong>LAR110029</strong>
-                    <span>Oud/Kalw. 6/3<br />Gem.SI/Kalf 105/3</span>
-                  </div>
-                  <div class="animal-node"><strong>AG 040374</strong></div>
-                  <div class="animal-node">
-                    <strong>LAR050151</strong>
-                    <span>Oud/Kalw. 20/13<br />Gem.SI/Kalf 103/13</span>
-                  </div>
-                  <div class="animal-node"><strong>LAR010297</strong></div>
-                  <div class="animal-node">
-                    <strong>LAR020180</strong>
-                    <span>Oud/Kalw. 20/15<br />Gem.SI/Kalf 108/14</span>
-                  </div>
-                  <div class="animal-node"><strong>LAR 980272</strong></div>
-                  <div class="animal-node">
-                    <strong>LAR970046</strong>
-                    <span>Oud/Kalw. 13/11<br />Gem.SI/Kalf 102/11</span>
-                  </div>
-                </div>
+  SS --> SSS["AG070457"]
+  SS --> SSD["LAR110029<br/>Oud/Kalw. 6/3<br/>Gem.SI/Kalf 105/3"]
+  SD --> SDS["AG 040374"]
+  SD --> SDD["LAR050151<br/>Oud/Kalw. 20/13<br/>Gem.SI/Kalf 103/13"]
+  DS --> DSS["LAR010297"]
+  DS --> DSD["LAR020180<br/>Oud/Kalw. 20/15<br/>Gem.SI/Kalf 108/14"]
+  DD --> DDS["LAR 980272"]
+  DD --> DDD["LAR970046<br/>Oud/Kalw. 13/11<br/>Gem.SI/Kalf 102/11"]
+
+  classDef parent fill:#8c3f2a,color:#fff,stroke:#6c2f1f,stroke-width:2px
+  classDef ancestor fill:#fff,color:#090909,stroke:#8c3f2a,stroke-width:1.5px
+  class S,D parent
+  class SS,SD,DS,DD,SSS,SSD,SDS,SDD,DSS,DSD,DDS,DDD ancestor
+                </pre>
               </div>
             </section>
           </section>
