@@ -1,262 +1,428 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hencor Bonsmaras - Quality Bonsmara Cattle</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hencor Bonsmaras | Cattle Auction</title>
+    <meta
+      name="description"
+      content="A simple Hencor Bonsmaras cattle auction lot page."
+    />
     <style>
-        :root {
-            --primary-color: #8B4513; /* SaddleBrown */
-            --secondary-color: #D2B48C; /* Tan */
-            --text-color: #333;
-            --light-gray: #f4f4f4;
-            --white: #fff;
-            --dark-red: #800000; /* Maroon */
+      :root {
+        color-scheme: light;
+        --ink: #16110d;
+        --hide: #8e4b34;
+        --sand: #efe5d3;
+        --paper: #fffdf8;
+        --line: #c9aa98;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--sand);
+        color: var(--ink);
+        font-family: Inter, Arial, Helvetica, sans-serif;
+      }
+
+      .hero {
+        position: relative;
+        min-height: 70vh;
+        overflow: hidden;
+        border-bottom: 8px solid #000;
+        background:
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.25)),
+          url("https://images.unsplash.com/photo-1527153857715-3908f2bae5e8?auto=format&fit=crop&w=1800&q=85") center / cover;
+      }
+
+      .brand {
+        position: relative;
+        z-index: 1;
+        padding: 1rem clamp(1rem, 4vw, 3rem);
+        text-align: right;
+        color: #000;
+      }
+
+      .brand strong {
+        display: block;
+        font-size: clamp(2.4rem, 7vw, 6rem);
+        font-weight: 900;
+        letter-spacing: 0.32em;
+        line-height: 0.95;
+        text-transform: uppercase;
+      }
+
+      .brand span {
+        display: block;
+        margin-top: 0.15rem;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(2.2rem, 6vw, 5rem);
+        font-style: italic;
+        line-height: 0.9;
+      }
+
+      .brand small {
+        display: block;
+        margin-top: 0.75rem;
+        font-size: clamp(0.65rem, 1.5vw, 0.9rem);
+        font-weight: 800;
+        letter-spacing: 0.42em;
+        text-transform: uppercase;
+      }
+
+      .lot-title {
+        position: absolute;
+        bottom: 1.5rem;
+        left: 0;
+        max-width: 94vw;
+        padding: 0.55rem clamp(1rem, 3vw, 2rem);
+        border-radius: 0 1rem 1rem 0;
+        background: rgba(0, 0, 0, 0.58);
+        color: #fff;
+        font-size: clamp(2.4rem, 7vw, 5.2rem);
+        font-weight: 900;
+        line-height: 1;
+        text-transform: uppercase;
+      }
+
+      .catalogue {
+        display: grid;
+        grid-template-columns: minmax(20rem, 42%) 1fr;
+        gap: 1rem;
+        padding: 1rem;
+        background: #fff;
+      }
+
+      .left {
+        display: grid;
+        grid-template-columns: 9rem 1fr;
+        gap: 1rem;
+      }
+
+      .card,
+      .pedigree,
+      .remarks,
+      .myostatin,
+      .ebv {
+        background: var(--paper);
+        border: 1px solid var(--line);
+      }
+
+      .card {
+        border: 2px solid var(--hide);
+        text-align: center;
+      }
+
+      .label {
+        background: var(--hide);
+        color: #fff;
+        font-weight: 900;
+        padding: 0.35rem 0.6rem;
+        text-align: left;
+        text-transform: uppercase;
+      }
+
+      .card-body {
+        display: grid;
+        gap: 0.75rem;
+        justify-items: center;
+        padding: 1rem;
+      }
+
+      .qr {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 3px;
+        width: 6rem;
+        height: 6rem;
+        padding: 0.25rem;
+        background: #fff;
+        box-shadow: inset 0 0 0 1px #ddd;
+      }
+
+      .qr i:nth-child(3n),
+      .qr i:nth-child(5n),
+      .qr i:nth-child(7n + 1) {
+        background: #000;
+      }
+
+      .pedigree {
+        padding: 1rem;
+      }
+
+      h2 {
+        margin: 0 0 0.8rem;
+        font-size: 1rem;
+        font-weight: 900;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .tree {
+        display: grid;
+        gap: 0.7rem;
+        font-size: 0.86rem;
+        font-weight: 800;
+      }
+
+      .tree div {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.6rem;
+      }
+
+      .tree span {
+        border-left: 2px solid #94877d;
+        padding-left: 0.6rem;
+      }
+
+      .right {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .values {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 0.5rem;
+      }
+
+      .value {
+        border: 1px solid var(--line);
+        border-radius: 0.55rem;
+        background: #fff;
+        padding: 0.7rem 0.4rem;
+        text-align: center;
+      }
+
+      .value b {
+        display: block;
+        font-size: 1.8rem;
+        line-height: 1;
+      }
+
+      .value span {
+        display: block;
+        min-height: 2.2em;
+        font-size: 0.82rem;
+        font-weight: 800;
+        line-height: 1.1;
+      }
+
+      .bands {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        background: var(--hide);
+        color: #fff;
+        font-size: 0.76rem;
+        font-weight: 900;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      .bands span {
+        padding: 0.55rem 0.25rem;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(16, 1fr);
+      }
+
+      .metric {
+        border: 1px solid #d7bfb2;
+        padding: 0.45rem 0.25rem;
+        text-align: center;
+      }
+
+      .metric dt {
+        margin: 0;
+        font-size: 0.68rem;
+        line-height: 1.05;
+      }
+
+      .metric dd {
+        margin: 0.25rem 0 0;
+        font-size: 0.86rem;
+        font-weight: 900;
+      }
+
+      .bottom {
+        display: grid;
+        grid-template-columns: 1fr 11rem;
+        gap: 1rem;
+      }
+
+      .remarks {
+        padding: 1rem;
+      }
+
+      .remarks p {
+        margin: 0;
+        color: #4d4038;
+        line-height: 1.55;
+      }
+
+      .myostatin {
+        border: 2px solid var(--hide);
+        text-align: center;
+      }
+
+      .myostatin h2 {
+        margin: 0;
+        background: var(--hide);
+        color: #fff;
+        padding: 0.5rem;
+      }
+
+      .myostatin p {
+        margin: 0;
+        border-top: 1px solid var(--line);
+        padding: 0.5rem;
+      }
+
+      @media (max-width: 980px) {
+        .catalogue,
+        .left,
+        .bottom {
+          grid-template-columns: 1fr;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            background-color: var(--light-gray);
+        .values {
+          grid-template-columns: repeat(2, 1fr);
         }
 
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-            padding: 0 20px;
+        .metrics {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      @media (max-width: 640px) {
+        .hero {
+          min-height: 58vh;
         }
 
-        header {
-            background: var(--primary-color);
-            color: var(--white);
-            padding: 1rem 0;
-            border-bottom: 5px solid var(--dark-red);
+        .brand strong {
+          letter-spacing: 0.18em;
         }
 
-        header a {
-            color: var(--white);
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 16px;
+        .catalogue {
+          padding: 0.6rem;
         }
 
-        header ul {
-            padding: 0;
-            list-style: none;
+        .tree div,
+        .bands {
+          grid-template-columns: 1fr;
         }
 
-        header li {
-            display: inline;
-            padding: 0 20px;
+        .metrics {
+          grid-template-columns: repeat(2, 1fr);
         }
-
-        header #branding {
-            float: left;
-        }
-
-        header #branding h1 {
-            margin: 0;
-        }
-
-        header nav {
-            float: right;
-            margin-top: 10px;
-        }
-
-        #showcase {
-            position: relative;
-            min-height: 400px;
-            text-align: center;
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #showcase .container {
-            position: relative;
-        }
-
-        #showcase h1 {
-            font-size: 55px;
-            margin-bottom: 10px;
-        }
-
-        #showcase p {
-            font-size: 20px;
-        }
-
-        section {
-            padding: 40px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 30px;
-            color: var(--primary-color);
-        }
-
-        #cattle-gallery {
-            background: var(--white);
-        }
-
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .gallery-item {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-            background: var(--light-gray);
-        }
-
-        #why-bonsmara {
-            background: var(--secondary-color);
-            color: var(--text-color);
-        }
-
-        .qualities {
-            display: flex;
-            justify-content: space-around;
-            text-align: center;
-        }
-
-        .quality {
-            width: 30%;
-        }
-
-        .quality h3 {
-            color: var(--primary-color);
-        }
-
-        #contact {
-            background: var(--white);
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        form input, form textarea {
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-        }
-
-        form button {
-            padding: 10px 20px;
-            background: var(--primary-color);
-            color: var(--white);
-            border: 0;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        footer {
-            background: var(--primary-color);
-            color: var(--white);
-            text-align: center;
-            padding: 20px;
-            margin-top: 20px;
-        }
+      }
     </style>
-</head>
-<body>
-    <header>
-        <div class="container">
-            <div id="branding">
-                <h1><a href="#">Hencor Bonsmaras</a></h1>
+  </head>
+  <body>
+    <main>
+      <section class="hero" aria-label="Auction lot hero">
+        <header class="brand">
+          <strong>Hencor</strong>
+          <span>Bonsmaras</span>
+          <small>Withstood the test of time</small>
+        </header>
+        <h1 class="lot-title">Lot 1 HEN 24-001</h1>
+      </section>
+
+      <section class="catalogue" aria-label="Lot details">
+        <aside class="left">
+          <article class="card">
+            <div class="label">Lot 1</div>
+            <div class="card-body">
+              <strong>Hencor Bonsmaras</strong>
+              <div class="qr" aria-label="Decorative QR code">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+              <strong>HEN 240001</strong>
+              <span>2024-09-15<br />SP</span>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="#showcase">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#cattle-gallery">Our Cattle</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+          </article>
 
-    <section id="showcase">
-        <div class="container">
-            <h1>Excellence in Bonsmara Breeding</h1>
-            <p>Top-tier genetics for a profitable herd.</p>
-        </div>
-    </section>
-
-    <section id="about">
-        <div class="container">
-            <h2 class="section-title">About Our Farm</h2>
-            <p>Hencor Bonsmaras is a family-owned and operated farm dedicated to the breeding of high-quality Bonsmara cattle. With decades of experience, we are committed to scientific breeding principles, focusing on fertility, adaptability, and profitability. Our mission is to provide fellow farmers with genetically superior animals that will enhance their herds and improve their bottom line. We believe in the power of the Bonsmara breed and strive to uphold its reputation for excellence.</p>
-        </div>
-    </section>
-
-    <section id="cattle-gallery">
-        <div class="container">
-            <h2 class="section-title">Our Cattle</h2>
-            <div class="gallery">
-                <div class="gallery-item">
-                    <h3>Champion Bull</h3>
-                    <p>Proven genetics, excellent temperament.</p>
-                </div>
-                <div class="gallery-item">
-                    <h3>Top Heifer</h3>
-                    <p>Fertile and adaptable, the future of your herd.</p>
-                </div>
-                <div class="gallery-item">
-                    <h3>Weanling Calf</h3>
-                    <p>Strong and healthy, ready for a new home.</p>
-                </div>
+          <article class="pedigree">
+            <h2>Pedigree</h2>
+            <div class="tree">
+              <div><span>HEN 190014</span><span>HEN 160008</span><span>HEN 120021</span></div>
+              <div><span>HEN 190014</span><span>HEN 150032</span><span>HEN 110017</span></div>
+              <div><span>HEN 200041</span><span>HEN 170026</span><span>HEN 130009</span></div>
+              <div><span>HEN 200041</span><span>HEN 160045</span><span>HEN 120038</span></div>
             </div>
-        </div>
-    </section>
+          </article>
+        </aside>
 
-    <section id="why-bonsmara">
-        <div class="container">
-            <h2 class="section-title">Why Choose Bonsmara?</h2>
-            <div class="qualities">
-                <div class="quality">
-                    <h3>Adaptability</h3>
-                    <p>Bonsmaras thrive in various climates and conditions, making them a versatile choice for any farm.</p>
-                </div>
-                <div class="quality">
-                    <h3>Fertility</h3>
-                    <p>Known for their high fertility rates, Bonsmaras ensure a productive and growing herd.</p>
-                </div>
-                <div class="quality">
-                    <h3>Meat Quality</h3>
-                    <p>The breed is renowned for its excellent beef quality, with tender and well-marbled meat.</p>
-                </div>
+        <section class="right" aria-label="Auction values">
+          <div class="values">
+            <div class="value"><span>Calving Ease</span><b>106</b></div>
+            <div class="value"><span>Weaner Calf</span><b>101</b></div>
+            <div class="value"><span>Fertility</span><b>94</b></div>
+            <div class="value"><span>Maintenance</span><b>109</b></div>
+            <div class="value"><span>Cow Value</span><b>100</b></div>
+            <div class="value"><span>Growth</span><b>108</b></div>
+            <div class="value"><span>Carcass</span><b>102</b></div>
+          </div>
+
+          <article class="ebv">
+            <div class="bands">
+              <span>Calf and Mother</span>
+              <span>Fertility</span>
+              <span>Post-Wean Growth</span>
+              <span>Frame</span>
+              <span>Carcass</span>
             </div>
-        </div>
-    </section>
+            <dl class="metrics">
+              <div class="metric"><dt>Birth Dir.</dt><dd>102</dd></div>
+              <div class="metric"><dt>Wean Dir.</dt><dd>92</dd></div>
+              <div class="metric"><dt>Wean Mat.</dt><dd>114</dd></div>
+              <div class="metric"><dt>Scr. Circ.</dt><dd>118</dd></div>
+              <div class="metric"><dt>Heifer Fert.</dt><dd>90</dd></div>
+              <div class="metric"><dt>Cow Fert.</dt><dd>93</dd></div>
+              <div class="metric"><dt>Longev.</dt><dd>113</dd></div>
+              <div class="metric"><dt>Post Wean</dt><dd>95</dd></div>
+              <div class="metric"><dt>ADG</dt><dd>110</dd></div>
+              <div class="metric"><dt>FCR</dt><dd>107</dd></div>
+              <div class="metric"><dt>Mature Wt.</dt><dd>89</dd></div>
+              <div class="metric"><dt>Height</dt><dd>95</dd></div>
+              <div class="metric"><dt>Length</dt><dd>98</dd></div>
+              <div class="metric"><dt>EMA</dt><dd>101</dd></div>
+              <div class="metric"><dt>Fat</dt><dd>100</dd></div>
+              <div class="metric"><dt>Mar</dt><dd>81</dd></div>
+            </dl>
+          </article>
 
-    <section id="contact">
-        <div class="container">
-            <h2 class="section-title">Contact Us</h2>
-            <form>
-                <input type="text" placeholder="Your Name">
-                <input type="email" placeholder="Your Email">
-                <textarea placeholder="Your Message"></textarea>
-                <button type="submit">Send Message</button>
-            </form>
-        </div>
-    </section>
-
-    <footer>
-        <p>Hencor Bonsmaras &copy; 2025</p>
-    </footer>
-
-</body>
+          <div class="bottom">
+            <article class="remarks">
+              <h2>Remarks:</h2>
+              <p>
+                Balanced Bonsmara bull with strong maternal value, clean structure
+                and above-average post-wean growth.
+              </p>
+            </article>
+            <article class="myostatin">
+              <h2>Myostatin</h2>
+              <p>Q204X&nbsp;&nbsp;0</p>
+              <p>NT821&nbsp;&nbsp;0</p>
+              <p>F94L&nbsp;&nbsp;0</p>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+  </body>
 </html>
