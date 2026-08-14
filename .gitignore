@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Generated route tree (TanStack Router)
+apps/web/src/routeTree.gen.ts
+
+# Build output
+dist/
+build/
+.output/
+.vinxi/
+.tanstack/
+.nitro/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Test / coverage
+coverage/
+
+# Playwright
+test-results/
+playwright-report/
+.playwright/
+blob-report/
