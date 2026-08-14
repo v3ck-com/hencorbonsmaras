@@ -74,34 +74,29 @@
       }
 
       .header-inner {
-        padding: clamp(3rem, 7vw, 6rem) clamp(1.25rem, 5vw, 5rem) clamp(5rem, 9vw, 7rem);
-      }
-
-      .brand-bar {
         position: relative;
-        z-index: 2;
-        border-bottom: 1px solid rgb(112 64 47 / 18%);
-        background: rgb(248 244 235 / 97%);
-        box-shadow: 0 0.6rem 2rem rgb(20 12 9 / 15%);
+        z-index: 1;
+        padding: clamp(4rem, 8vw, 7rem) clamp(1.25rem, 5vw, 5rem) clamp(5rem, 9vw, 7rem);
       }
 
-      .brand-bar-inner {
-        display: flex;
-        width: min(92rem, 100%);
-        min-height: 7.5rem;
-        margin-inline: auto;
-        padding-inline: clamp(1.25rem, 5vw, 5rem);
+      .hero-lockup {
+        display: grid;
+        grid-template-columns: clamp(13rem, 20vw, 17rem) minmax(0, 1fr);
         align-items: center;
-        justify-content: space-between;
-        gap: 2rem;
+        gap: clamp(2.5rem, 6vw, 6rem);
       }
 
       .brand-mark {
         position: relative;
-        flex: 0 0 auto;
-        width: clamp(11rem, 16vw, 13rem);
+        width: 100%;
         aspect-ratio: 1.6;
         overflow: hidden;
+        border: 1px solid rgb(255 255 255 / 24%);
+        border-radius: 50%;
+        background: rgb(248 244 235 / 95%);
+        box-shadow:
+          0 1.5rem 4rem rgb(20 12 9 / 28%),
+          0 0 0 0.65rem rgb(155 170 136 / 13%);
       }
 
       .brand-mark img {
@@ -115,13 +110,9 @@
         transform: translate(-50%, -50%);
       }
 
-      .brand-meta {
-        margin: 0;
-        color: var(--oxblood);
-        font-size: 0.75rem;
-        font-weight: 850;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
+      .hero-copy {
+        padding-left: clamp(2rem, 4vw, 4rem);
+        border-left: 1px solid rgb(244 239 229 / 28%);
       }
 
       .eyebrow {
@@ -390,21 +381,22 @@
       }
 
       @media (max-width: 800px) {
-        .site-header {
-          padding-bottom: 4.5rem;
-        }
-
         .header-inner {
-          padding-bottom: 0;
+          padding-block: 3rem 4.5rem;
         }
 
-        .brand-bar-inner {
-          min-height: 6.5rem;
-          justify-content: center;
+        .hero-lockup {
+          grid-template-columns: 1fr;
+          gap: 2.5rem;
         }
 
-        .brand-meta {
-          display: none;
+        .brand-mark {
+          width: min(13rem, 65vw);
+        }
+
+        .hero-copy {
+          padding-left: 0;
+          border-left: 0;
         }
 
         .catalogue-heading,
@@ -439,20 +431,19 @@
   </head>
   <body>
     <header class="site-header">
-      <div class="brand-bar">
-        <div class="brand-bar-inner">
+      <div class="header-inner">
+        <div class="hero-lockup">
           <div class="brand-mark">
             <img src="assets/logo.svg" alt="Hencor Bonsmaras" />
           </div>
-          <p class="brand-meta">Veilingskatalogus</p>
+          <div class="hero-copy">
+            <p class="eyebrow">Hencor Bonsmaras</p>
+            <h1>Veilingskatalogus</h1>
+            <p class="header-copy">
+              Verken elke bul wat aangebied word, kyk na beskikbare lotvideo's en bestudeer stamboom- en teelsyfers voor die veilingsdag.
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="header-inner">
-        <p class="eyebrow">Hencor Bonsmaras</p>
-        <h1>Veilingskatalogus</h1>
-        <p class="header-copy">
-          Verken elke bul wat aangebied word, kyk na beskikbare lotvideo's en bestudeer stamboom- en teelsyfers voor die veilingsdag.
-        </p>
       </div>
     </header>
 
