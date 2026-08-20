@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Besigtig Hencor Bonsmaras se 2026-veilingskatalogus met 25 Bonsmarabulle, lotinligting, stambome, teelwaardes, groeisyfers en karkasaanwysers."
+      content="Besigtig Hencor Bonsmaras se veilingskatalogus met 25 Bonsmarabulle, lotinligting, stambome, teelwaardes, groeisyfers en karkasaanwysers."
     />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#70402f" />
@@ -272,6 +272,31 @@
         font-weight: 800;
         letter-spacing: 0.13em;
         text-transform: uppercase;
+      }
+
+      .catalogue-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .catalogue-download {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2.8rem;
+        padding: 0.7rem 1rem;
+        border-radius: 999px;
+        color: white;
+        background: var(--oxblood);
+        font-size: 0.8rem;
+        font-weight: 850;
+        text-decoration: none;
+        box-shadow: 0 0.65rem 1.5rem rgb(53 37 31 / 16%);
+      }
+
+      .catalogue-download:hover,
+      .catalogue-download:focus-visible {
+        background: var(--clay);
       }
 
       .lot-index {
@@ -543,6 +568,12 @@
           margin-top: 0.65rem;
         }
 
+        .catalogue-actions {
+          align-items: flex-start;
+          flex-direction: column;
+          margin-top: 1rem;
+        }
+
         .lot-overview {
           grid-template-columns: 1fr;
         }
@@ -587,7 +618,16 @@
           <p class="eyebrow" style="color: var(--oxblood)">Bulle op aanbod</p>
           <h2>Veilingslotte</h2>
         </div>
-        <p class="lot-count">25 lotte gelys</p>
+        <div class="catalogue-actions">
+          <p class="lot-count">25 lotte gelys</p>
+          <a
+            class="catalogue-download"
+            href="assets/hencor-veilingskatalogus-2026.pdf"
+            download="Hencor-Bonsmaras-Veilingskatalogus-2026.pdf"
+          >
+            Laai volledige PDF af
+          </a>
+        </div>
       </div>
 
       <nav class="lot-index" aria-label="Spring na 'n veilingslot">
@@ -652,9 +692,37 @@
         "HC240085",
       ];
 
+      const bullImages = new Set([
+        "HC230057",
+        "HC230075",
+        "HC240003",
+        "HC240005",
+        "HC240007",
+        "HC240011",
+        "HC240019",
+        "HC240023",
+        "HC240025",
+        "HC240029",
+        "HC240035",
+        "HC240061",
+        "HC240067",
+        "HC240079",
+        "HC240109",
+        "HC240123",
+        "HC240137",
+      ]);
+
       document.querySelector("#lot-list").innerHTML = bulls
         .map((bull, index) => {
           const lot = String(index + 1).padStart(2, "0");
+          const bullNumber = bull.replace(" HH", "");
+          const hasBullImage = bullImages.has(bullNumber);
+          const bullImage = hasBullImage
+            ? `assets/bull-images/${bullNumber}.jpg`
+            : "assets/bull-placeholder.svg";
+          const bullImageAlt = hasBullImage
+            ? `Bonsmarabul ${bull}, lot ${lot}`
+            : `Plekhouer vir die bulfoto van lot ${lot}, ${bull}`;
 
           return `
             <article class="lot-card" id="lot-${lot}">
@@ -662,8 +730,8 @@
                 <div class="pasture-frame">
                   <div class="pasture-frame-inner">
                     <img
-                      src="assets/bull-placeholder.svg"
-                      alt="Plekhouer vir die bulfoto van lot ${lot}, ${bull}"
+                      src="${bullImage}"
+                      alt="${bullImageAlt}"
                       loading="lazy"
                       decoding="async"
                     />
