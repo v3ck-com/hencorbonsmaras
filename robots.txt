@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hencorbonsmaras.co.za/sitemap.xml
