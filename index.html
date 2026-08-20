@@ -372,13 +372,19 @@
         backdrop-filter: blur(12px);
       }
 
+      #lot-list {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(2rem, 5vw, 4rem);
+      }
+
+      #lot-list .lot-card.starred {
+        order: -1;
+      }
+
       .lot-card:target {
         outline: 0.3rem solid var(--clay);
         outline-offset: 0.35rem;
-      }
-
-      .lot-card + .lot-card {
-        margin-top: clamp(2rem, 5vw, 4rem);
       }
 
       .lot-overview {
@@ -455,6 +461,56 @@
         font-weight: 900;
         letter-spacing: 0.16em;
         text-transform: uppercase;
+      }
+
+      .lot-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .lot-meta .lot-label {
+        margin-bottom: 0;
+      }
+
+      .star-button {
+        display: grid;
+        flex: 0 0 auto;
+        width: 2.8rem;
+        height: 2.8rem;
+        padding: 0;
+        place-items: center;
+        border: 1px solid rgb(112 64 47 / 24%);
+        border-radius: 50%;
+        color: var(--oxblood);
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .star-button svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        fill: transparent;
+        stroke: currentColor;
+        stroke-linejoin: round;
+        stroke-width: 1.8;
+      }
+
+      .star-button:hover,
+      .star-button:focus-visible {
+        background: rgb(112 64 47 / 10%);
+      }
+
+      .star-button.active {
+        color: #8c5d13;
+        border-color: #d6a43b;
+        background: #f4d98d;
+      }
+
+      .star-button.active svg {
+        fill: currentColor;
       }
 
       .lot-details h3 {
@@ -832,6 +888,18 @@
         "HC240137",
       ]);
 
+      const starredLotsStorageKey = "hencor-starred-lots";
+      let starredLots = new Set();
+
+      try {
+        const storedLots = JSON.parse(localStorage.getItem(starredLotsStorageKey) ?? "[]");
+        if (Array.isArray(storedLots)) {
+          starredLots = new Set(storedLots.filter((lot) => /^\d{2}$/.test(lot)));
+        }
+      } catch {
+        starredLots = new Set();
+      }
+
       document.querySelector("#lot-list").innerHTML = bulls
         .map((bull, index) => {
           const lot = String(index + 1).padStart(2, "0");
@@ -846,7 +914,7 @@
             : `Plekhouer vir die bulfoto van lot ${lot}, ${bull}`;
 
           return `
-            <article class="lot-card" id="lot-${lot}">
+            <article class="lot-card${starredLots.has(lot) ? " starred" : ""}" id="lot-${lot}">
               <div class="lot-overview">
                 <div class="pasture-frame">
                   <div class="pasture-frame-inner">
@@ -860,7 +928,20 @@
                 </div>
 
                 <div class="lot-details">
-                  <span class="lot-label">Lot ${lot}</span>
+                  <div class="lot-meta">
+                    <span class="lot-label">Lot ${lot}</span>
+                    <button
+                      class="star-button${starredLots.has(lot) ? " active" : ""}"
+                      type="button"
+                      data-lot="${lot}"
+                      aria-label="${starredLots.has(lot) ? `Verwyder lot ${lot} uit gunstelinge` : `Merk lot ${lot} as gunsteling`}"
+                      aria-pressed="${starredLots.has(lot)}"
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="m12 2.8 2.8 5.7 6.3.9-4.5 4.4 1.1 6.2-5.7-3-5.7 3 1.1-6.2-4.5-4.4 6.3-.9z" />
+                      </svg>
+                    </button>
+                  </div>
                   <h3>${bull}</h3>
                   ${remark ? `<p class="lot-description">${remark}</p>` : ""}
                   <span class="video-link pending" aria-disabled="true">
@@ -891,6 +972,33 @@
             </article>`;
         })
         .join("");
+
+      document.querySelectorAll(".star-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          const lot = button.dataset.lot;
+          const isStarred = !starredLots.has(lot);
+
+          if (isStarred) {
+            starredLots.add(lot);
+          } else {
+            starredLots.delete(lot);
+          }
+
+          button.classList.toggle("active", isStarred);
+          button.closest(".lot-card").classList.toggle("starred", isStarred);
+          button.setAttribute("aria-pressed", String(isStarred));
+          button.setAttribute(
+            "aria-label",
+            isStarred ? `Verwyder lot ${lot} uit gunstelinge` : `Merk lot ${lot} as gunsteling`,
+          );
+
+          try {
+            localStorage.setItem(starredLotsStorageKey, JSON.stringify([...starredLots]));
+          } catch {
+            // Keep the in-page state when browser storage is unavailable.
+          }
+        });
+      });
 
       const backToTop = document.querySelector(".back-to-top");
       const siteHeader = document.querySelector(".site-header");
