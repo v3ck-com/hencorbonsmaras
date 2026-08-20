@@ -683,6 +683,34 @@
         "HC240085",
       ];
 
+      const remarks = [
+        "Geskik vir verse.",
+        "Geskik vir verse.",
+        "",
+        "",
+        "Geskik vir verse.",
+        "Geskik vir verse.",
+        "In kudde gebruik. Geskik vir verse.",
+        "In kudde gebruik.",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Wag vir Q204X resultate. Indien skoon, geskik vir verse.",
+        "",
+        "Geskik vir verse.",
+        "",
+        "",
+        "Geskik vir verse.",
+        "Geskik vir verse.",
+        "",
+        "",
+        "",
+        "",
+        "Geskik vir verse.",
+      ];
+
       const bullImages = new Set([
         "HC230057",
         "HC230075",
@@ -712,6 +740,7 @@
       document.querySelector("#lot-list").innerHTML = bulls
         .map((bull, index) => {
           const lot = String(index + 1).padStart(2, "0");
+          const remark = remarks[index];
           const bullNumber = bull.replace(" HH", "");
           const hasBullImage = bullImages.has(bullNumber);
           const bullImage = hasBullImage
@@ -738,9 +767,7 @@
                 <div class="lot-details">
                   <span class="lot-label">Lot ${lot}</span>
                   <h3>${bull}</h3>
-                  <p class="lot-description">
-                    Bestudeer die volledige stamboom, teelwaardes, groeisyfers en karkasaanwysers vir hierdie lot hieronder.
-                  </p>
+                  ${remark ? `<p class="lot-description">${remark}</p>` : ""}
                   <span class="video-link pending" aria-disabled="true">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                       <path d="M8 5v14l11-7z" />
