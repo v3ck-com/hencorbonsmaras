@@ -325,6 +325,56 @@
         background: var(--clay);
       }
 
+      .favorites-filter {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2.8rem;
+        gap: 0.5rem;
+        padding: 0.65rem 0.9rem;
+        border: 1px solid rgb(112 64 47 / 24%);
+        border-radius: 999px;
+        color: var(--oxblood);
+        background: transparent;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.8rem;
+        font-weight: 850;
+      }
+
+      .favorites-filter svg {
+        width: 1rem;
+        height: 1rem;
+        fill: transparent;
+        stroke: currentColor;
+        stroke-linejoin: round;
+        stroke-width: 1.8;
+      }
+
+      .favorites-filter:hover,
+      .favorites-filter:focus-visible {
+        background: rgb(112 64 47 / 10%);
+      }
+
+      .favorites-filter.active {
+        color: #8c5d13;
+        border-color: #d6a43b;
+        background: #f4d98d;
+      }
+
+      .favorites-filter.active svg {
+        fill: currentColor;
+      }
+
+      .favorites-count {
+        min-width: 1.35rem;
+        padding: 0.1rem 0.35rem;
+        border-radius: 999px;
+        color: white;
+        background: var(--oxblood);
+        font-size: 0.68rem;
+        text-align: center;
+      }
+
       .lot-index {
         position: absolute;
         z-index: 20;
@@ -378,8 +428,14 @@
         gap: clamp(2rem, 5vw, 4rem);
       }
 
-      #lot-list .lot-card.starred {
-        order: -1;
+      .favorites-empty {
+        margin: 0;
+        padding: clamp(2rem, 5vw, 4rem);
+        border: 1px dashed rgb(112 64 47 / 30%);
+        border-radius: 2rem;
+        color: #5f554c;
+        background: rgb(251 248 241 / 65%);
+        text-align: center;
       }
 
       .lot-card:target {
@@ -754,6 +810,13 @@
           <h2>Veilingslotte</h2>
         </div>
         <div class="catalogue-actions">
+          <button class="favorites-filter" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m12 2.8 2.8 5.7 6.3.9-4.5 4.4 1.1 6.2-5.7-3-5.7 3 1.1-6.2-4.5-4.4 6.3-.9z" />
+            </svg>
+            Gunstelinge
+            <span class="favorites-count" aria-hidden="true">0</span>
+          </button>
           <details class="lot-count-menu">
             <summary class="lot-count">25 lotte gelys</summary>
             <nav class="lot-index" aria-label="Spring na 'n veilingslot">
@@ -795,6 +858,7 @@
       </div>
 
       <div id="lot-list"></div>
+      <p class="favorites-empty" hidden>Merk 'n lot met die ster om dit hier te sien.</p>
       <noscript>JavaScript moet geaktiveer wees om die veilingslotte te vertoon.</noscript>
     </main>
 
@@ -914,7 +978,7 @@
             : `Plekhouer vir die bulfoto van lot ${lot}, ${bull}`;
 
           return `
-            <article class="lot-card${starredLots.has(lot) ? " starred" : ""}" id="lot-${lot}">
+            <article class="lot-card" id="lot-${lot}" data-lot="${lot}">
               <div class="lot-overview">
                 <div class="pasture-frame">
                   <div class="pasture-frame-inner">
@@ -973,6 +1037,30 @@
         })
         .join("");
 
+      const favoritesFilter = document.querySelector(".favorites-filter");
+      const favoritesCount = document.querySelector(".favorites-count");
+      const favoritesEmpty = document.querySelector(".favorites-empty");
+      let favoritesOnly = false;
+
+      function updateFavoritesView() {
+        document.querySelectorAll(".lot-card").forEach((card) => {
+          card.hidden = favoritesOnly && !starredLots.has(card.dataset.lot);
+        });
+        favoritesCount.textContent = starredLots.size;
+        favoritesEmpty.hidden = !favoritesOnly || starredLots.size > 0;
+        favoritesFilter.classList.toggle("active", favoritesOnly);
+        favoritesFilter.setAttribute("aria-pressed", String(favoritesOnly));
+        favoritesFilter.setAttribute(
+          "aria-label",
+          `${favoritesOnly ? "Wys alle lotte" : "Wys net gunstelinge"} (${starredLots.size})`,
+        );
+      }
+
+      favoritesFilter.addEventListener("click", () => {
+        favoritesOnly = !favoritesOnly;
+        updateFavoritesView();
+      });
+
       document.querySelectorAll(".star-button").forEach((button) => {
         button.addEventListener("click", () => {
           const lot = button.dataset.lot;
@@ -985,7 +1073,6 @@
           }
 
           button.classList.toggle("active", isStarred);
-          button.closest(".lot-card").classList.toggle("starred", isStarred);
           button.setAttribute("aria-pressed", String(isStarred));
           button.setAttribute(
             "aria-label",
@@ -997,8 +1084,12 @@
           } catch {
             // Keep the in-page state when browser storage is unavailable.
           }
+
+          updateFavoritesView();
         });
       });
+
+      updateFavoritesView();
 
       const backToTop = document.querySelector(".back-to-top");
       const siteHeader = document.querySelector(".site-header");
@@ -1010,6 +1101,8 @@
 
       lotCountMenu.querySelectorAll("a").forEach((link) => {
         link.addEventListener("click", () => {
+          favoritesOnly = false;
+          updateFavoritesView();
           lotCountMenu.open = false;
         });
       });
