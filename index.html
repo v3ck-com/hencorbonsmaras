@@ -193,6 +193,10 @@
         backdrop-filter: blur(12px);
       }
 
+      .lot-card + .lot-card {
+        margin-top: clamp(2rem, 5vw, 4rem);
+      }
+
       .lot-overview {
         display: grid;
         grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 0.8fr);
@@ -248,7 +252,8 @@
       .pasture-frame img {
         display: block;
         width: 100%;
-        height: auto;
+        aspect-ratio: 3 / 2;
+        object-fit: cover;
         border: 1px solid rgb(53 37 31 / 30%);
         border-radius: 1.3rem;
       }
@@ -453,56 +458,96 @@
           <p class="eyebrow" style="color: var(--oxblood)">Bulle op aanbod</p>
           <h2>Veilingslotte</h2>
         </div>
-        <p class="lot-count">1 lot gelys</p>
+        <p class="lot-count">25 lotte gelys</p>
       </div>
 
-      <!-- Dupliseer hierdie artikel vir elke bykomende veilingslot. -->
-      <article class="lot-card" id="lot-1">
-        <div class="lot-overview">
-          <div class="pasture-frame">
-            <div class="pasture-frame-inner">
-              <img
-                src="assets/LAR210022.jpeg"
-                alt="LAR210022 HH Bonsmarabul wat in 'n weiding staan"
-              />
-            </div>
-          </div>
-
-          <div class="lot-details">
-            <span class="lot-label">Lot 01</span>
-            <h3>Hencor Bonsmaras</h3>
-            <p class="bull-number">LAR210022 HH</p>
-            <p class="lot-description">
-              Bestudeer die volledige stamboom, teelwaardes, groeisyfers en karkasaanwysers vir hierdie lot hieronder.
-            </p>
-
-            <!-- Vervang hierdie span met 'n skakel wat class="video-link" gebruik wanneer die YouTube-URL beskikbaar is. -->
-            <span class="video-link pending" aria-disabled="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-              Video binnekort beskikbaar
-            </span>
-          </div>
-        </div>
-
-        <section class="figures-section" aria-labelledby="lot-1-figures">
-          <div class="figures-heading">
-            <h3 id="lot-1-figures">Stamboom &amp; syfers</h3>
-            <p>Rol horisontaal op kleiner skerms. Kies die beeld om dit volgrootte te besigtig.</p>
-          </div>
-          <div class="figures-viewport">
-            <a href="assets/LAR210022-data.png" target="_blank" rel="noopener">
-              <img
-                src="assets/LAR210022-data.png"
-                alt="Stamboom en teelsyfers vir lot 1, LAR210022 HH"
-              />
-            </a>
-          </div>
-        </section>
-      </article>
+      <div id="lot-list"></div>
+      <noscript>JavaScript moet geaktiveer wees om die veilingslotte te vertoon.</noscript>
     </main>
 
     <footer class="site-footer">Hencor Bonsmaras Veilingskatalogus</footer>
+    <script>
+      const bulls = [
+        "HC240019",
+        "HC240003",
+        "HC240145",
+        "HC240079",
+        "HC240005",
+        "HC240007",
+        "HC230057 HH",
+        "HC230075",
+        "HC240109",
+        "HC240029",
+        "HC240035",
+        "HC240051",
+        "HC240137",
+        "HC240101",
+        "HC240123",
+        "HC240011",
+        "HC240023",
+        "HC240061",
+        "HC240083",
+        "HC240025",
+        "HC240139",
+        "HC240087",
+        "HC240133",
+        "HC240067",
+        "HC240085",
+      ];
+
+      document.querySelector("#lot-list").innerHTML = bulls
+        .map((bull, index) => {
+          const lot = String(index + 1).padStart(2, "0");
+
+          return `
+            <article class="lot-card" id="lot-${lot}">
+              <div class="lot-overview">
+                <div class="pasture-frame">
+                  <div class="pasture-frame-inner">
+                    <img
+                      src="assets/bull-placeholder.svg"
+                      alt="Plekhouer vir die bulfoto van lot ${lot}, ${bull}"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+
+                <div class="lot-details">
+                  <span class="lot-label">Lot ${lot}</span>
+                  <h3>Hencor Bonsmaras</h3>
+                  <p class="bull-number">${bull}</p>
+                  <p class="lot-description">
+                    Bestudeer die volledige stamboom, teelwaardes, groeisyfers en karkasaanwysers vir hierdie lot hieronder.
+                  </p>
+                  <span class="video-link pending" aria-disabled="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                    Video binnekort beskikbaar
+                  </span>
+                </div>
+              </div>
+
+              <section class="figures-section" aria-labelledby="lot-${lot}-figures">
+                <div class="figures-heading">
+                  <h3 id="lot-${lot}-figures">Stamboom &amp; syfers</h3>
+                  <p>Rol horisontaal op kleiner skerms. Kies die beeld om dit volgrootte te besigtig.</p>
+                </div>
+                <div class="figures-viewport">
+                  <a href="assets/katalogus-tables/lot-${lot}.png" target="_blank" rel="noopener">
+                    <img
+                      src="assets/katalogus-tables/lot-${lot}.png"
+                      alt="Stamboom en teelsyfers vir lot ${lot}, ${bull}"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </a>
+                </div>
+              </section>
+            </article>`;
+        })
+        .join("");
+    </script>
   </body>
 </html>
