@@ -268,10 +268,36 @@
         margin: 0;
         padding-bottom: 0.35rem;
         color: #5f554c;
+        cursor: pointer;
         font-size: 0.82rem;
         font-weight: 800;
         letter-spacing: 0.13em;
+        list-style: none;
         text-transform: uppercase;
+      }
+
+      .lot-count::-webkit-details-marker {
+        display: none;
+      }
+
+      .lot-count::after {
+        display: inline-block;
+        width: 0.4rem;
+        height: 0.4rem;
+        margin: 0 0 0.2rem 0.55rem;
+        content: "";
+        border-right: 0.12rem solid currentColor;
+        border-bottom: 0.12rem solid currentColor;
+        transform: rotate(45deg);
+        transition: transform 160ms ease;
+      }
+
+      .lot-count-menu {
+        position: relative;
+      }
+
+      .lot-count-menu[open] .lot-count::after {
+        transform: rotate(225deg);
       }
 
       .catalogue-actions {
@@ -300,34 +326,38 @@
       }
 
       .lot-index {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.6rem;
-        margin: 0 0 2rem;
-        padding: 1rem;
-        border: 1px solid rgb(53 37 31 / 12%);
-        border-radius: 1.25rem;
-        background: rgb(251 248 241 / 72%);
+        position: absolute;
+        z-index: 20;
+        top: calc(100% + 0.75rem);
+        right: 0;
+        display: grid;
+        width: min(22rem, calc(100vw - 2rem));
+        max-height: min(26rem, 60vh);
+        overflow-y: auto;
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+        padding: 0.75rem;
+        border: 1px solid rgb(53 37 31 / 14%);
+        border-radius: 1rem;
+        background: var(--paper);
+        box-shadow: 0 1.25rem 3rem rgb(53 37 31 / 24%);
+        scrollbar-color: var(--sage-dark) transparent;
       }
 
       .lot-index a {
-        min-width: 3rem;
-        padding: 0.55rem 0.7rem;
-        border-radius: 999px;
+        padding: 0.65rem 0.75rem;
+        border-radius: 0.55rem;
         color: var(--oxblood);
-        background: white;
+        background: transparent;
         font-size: 0.78rem;
         font-weight: 850;
-        text-align: center;
         text-decoration: none;
         white-space: nowrap;
-        box-shadow: 0 0.25rem 0.8rem rgb(53 37 31 / 8%);
       }
 
       .lot-index a:hover,
       .lot-index a:focus-visible {
-        color: white;
-        background: var(--oxblood);
+        background: rgb(112 64 47 / 10%);
       }
 
       .lot-card {
@@ -530,6 +560,51 @@
         text-transform: uppercase;
       }
 
+      .back-to-top {
+        position: fixed;
+        z-index: 10;
+        right: clamp(1rem, 3vw, 2rem);
+        bottom: clamp(1rem, 3vw, 2rem);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        min-height: 2.8rem;
+        padding: 0.7rem 1rem;
+        border: 1px solid rgb(255 255 255 / 28%);
+        border-radius: 999px;
+        color: white;
+        background: var(--oxblood);
+        box-shadow: 0 0.8rem 2rem rgb(53 37 31 / 24%);
+        font-size: 0.78rem;
+        font-weight: 850;
+        text-decoration: none;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(1rem);
+        transition: opacity 180ms ease, transform 180ms ease;
+      }
+
+      .back-to-top svg {
+        width: 1rem;
+        height: 1rem;
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2;
+      }
+
+      .back-to-top.visible {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .back-to-top:hover,
+      .back-to-top:focus-visible {
+        background: var(--clay);
+      }
+
       @media (max-width: 800px) {
         .header-inner {
           padding-block: 3rem 4.5rem;
@@ -565,6 +640,11 @@
           margin-top: 1rem;
         }
 
+        .lot-index {
+          right: auto;
+          left: 0;
+        }
+
         .lot-overview {
           grid-template-columns: 1fr;
         }
@@ -582,10 +662,18 @@
         html {
           scroll-behavior: auto;
         }
+
+        .back-to-top {
+          transition: none;
+        }
+
+        .lot-count::after {
+          transition: none;
+        }
       }
     </style>
   </head>
-  <body>
+  <body id="top">
     <header class="site-header">
       <div class="header-inner">
         <div class="hero-lockup">
@@ -610,7 +698,36 @@
           <h2>Veilingslotte</h2>
         </div>
         <div class="catalogue-actions">
-          <p class="lot-count">25 lotte gelys</p>
+          <details class="lot-count-menu">
+            <summary class="lot-count">25 lotte gelys</summary>
+            <nav class="lot-index" aria-label="Spring na 'n veilingslot">
+              <a href="#lot-01">01 HC240019</a>
+              <a href="#lot-02">02 HC240003</a>
+              <a href="#lot-03">03 HC240145</a>
+              <a href="#lot-04">04 HC240079</a>
+              <a href="#lot-05">05 HC240005</a>
+              <a href="#lot-06">06 HC240007</a>
+              <a href="#lot-07">07 HC230057 HH</a>
+              <a href="#lot-08">08 HC230075</a>
+              <a href="#lot-09">09 HC240109</a>
+              <a href="#lot-10">10 HC240029</a>
+              <a href="#lot-11">11 HC240035</a>
+              <a href="#lot-12">12 HC240051</a>
+              <a href="#lot-13">13 HC240137</a>
+              <a href="#lot-14">14 HC240101</a>
+              <a href="#lot-15">15 HC240123</a>
+              <a href="#lot-16">16 HC240011</a>
+              <a href="#lot-17">17 HC240023</a>
+              <a href="#lot-18">18 HC240061</a>
+              <a href="#lot-19">19 HC240083</a>
+              <a href="#lot-20">20 HC240025</a>
+              <a href="#lot-21">21 HC240139</a>
+              <a href="#lot-22">22 HC240087</a>
+              <a href="#lot-23">23 HC240133</a>
+              <a href="#lot-24">24 HC240067</a>
+              <a href="#lot-25">25 HC240085</a>
+            </nav>
+          </details>
           <a
             class="catalogue-download"
             href="assets/hencor-veilingskatalogus-2026.pdf"
@@ -621,39 +738,17 @@
         </div>
       </div>
 
-      <nav class="lot-index" aria-label="Spring na 'n veilingslot">
-        <a href="#lot-01">01 HC240019</a>
-        <a href="#lot-02">02 HC240003</a>
-        <a href="#lot-03">03 HC240145</a>
-        <a href="#lot-04">04 HC240079</a>
-        <a href="#lot-05">05 HC240005</a>
-        <a href="#lot-06">06 HC240007</a>
-        <a href="#lot-07">07 HC230057 HH</a>
-        <a href="#lot-08">08 HC230075</a>
-        <a href="#lot-09">09 HC240109</a>
-        <a href="#lot-10">10 HC240029</a>
-        <a href="#lot-11">11 HC240035</a>
-        <a href="#lot-12">12 HC240051</a>
-        <a href="#lot-13">13 HC240137</a>
-        <a href="#lot-14">14 HC240101</a>
-        <a href="#lot-15">15 HC240123</a>
-        <a href="#lot-16">16 HC240011</a>
-        <a href="#lot-17">17 HC240023</a>
-        <a href="#lot-18">18 HC240061</a>
-        <a href="#lot-19">19 HC240083</a>
-        <a href="#lot-20">20 HC240025</a>
-        <a href="#lot-21">21 HC240139</a>
-        <a href="#lot-22">22 HC240087</a>
-        <a href="#lot-23">23 HC240133</a>
-        <a href="#lot-24">24 HC240067</a>
-        <a href="#lot-25">25 HC240085</a>
-      </nav>
-
       <div id="lot-list"></div>
       <noscript>JavaScript moet geaktiveer wees om die veilingslotte te vertoon.</noscript>
     </main>
 
     <footer class="site-footer">Hencor Bonsmaras Veilingskatalogus</footer>
+    <a class="back-to-top" href="#top" aria-label="Terug na bo">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="m6 15 6-6 6 6" />
+      </svg>
+      Bo
+    </a>
     <script>
       const bulls = [
         "HC240019",
@@ -796,6 +891,20 @@
             </article>`;
         })
         .join("");
+
+      const backToTop = document.querySelector(".back-to-top");
+      const siteHeader = document.querySelector(".site-header");
+      const lotCountMenu = document.querySelector(".lot-count-menu");
+
+      new IntersectionObserver(([entry]) => {
+        backToTop.classList.toggle("visible", !entry.isIntersecting);
+      }).observe(siteHeader);
+
+      lotCountMenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          lotCountMenu.open = false;
+        });
+      });
     </script>
   </body>
 </html>
