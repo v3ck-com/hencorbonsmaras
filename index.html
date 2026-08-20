@@ -445,8 +445,8 @@
 
       .lot-overview {
         display: grid;
-        grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 0.8fr);
-        gap: clamp(2rem, 5vw, 5rem);
+        grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 0.6fr);
+        gap: clamp(1.5rem, 3vw, 3rem);
         align-items: center;
         padding: clamp(1rem, 4vw, 3.5rem);
       }
@@ -759,6 +759,15 @@
 
         .lot-overview {
           grid-template-columns: 1fr;
+          padding: 0 0 clamp(1rem, 4vw, 3.5rem);
+        }
+
+        .lot-overview .pasture-frame {
+          border-radius: 1.75rem 1.75rem 2.25rem 2.25rem;
+        }
+
+        .lot-details {
+          padding-inline: clamp(1rem, 4vw, 3.5rem);
         }
 
         .lot-card {
