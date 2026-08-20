@@ -223,9 +223,6 @@ for lot in lots {
     )
 
     let photoFrame = CGRect(x: 220, y: 256, width: 402, height: 268)
-    context.setFillColor(ink.cgColor)
-    context.addPath(CGPath(roundedRect: photoFrame.insetBy(dx: -7, dy: -7), cornerWidth: 14, cornerHeight: 14, transform: nil))
-    context.fillPath()
     drawImage(bullImage, in: photoFrame, context: context)
 
     drawCenteredText(
