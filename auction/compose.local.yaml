@@ -1,0 +1,11 @@
+# Laptop-only override; do not use on the public Dokploy host.
+services:
+  app:
+    ports:
+      - "127.0.0.1:8097:8080"
+  postgres:
+    ports:
+      - "127.0.0.1:55439:5432"
+  livekit:
+    ports:
+      - "127.0.0.1:7880:7880/tcp"

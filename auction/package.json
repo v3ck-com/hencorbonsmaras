@@ -1,0 +1,18 @@
+{
+  "name": "hencor-auction",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild web/src/app.js --bundle --minify --format=esm --outfile=web/static/app.js",
+    "test": "node --test web/src/*.test.js",
+    "test:browser": "playwright test"
+  },
+  "dependencies": {
+    "livekit-client": "2.22.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "esbuild": "0.28.2",
+    "prettier": "3.9.8"
+  }
+}

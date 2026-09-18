@@ -1,0 +1,9 @@
+.git
+**/node_modules
+**/.env
+**/.env.*
+**/test-results
+**/playwright-report
+**/bin
+**/.DS_Store
+auction/web/static/app.js

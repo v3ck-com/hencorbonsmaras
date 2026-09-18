@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#70402f" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Live auction · Hencor Bonsmaras</title>
+    <link rel="icon" href="/catalogue/logo.png" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <script type="module" src="/static/app.js"></script>
+  </head>
+  <body>
+    <header class="masthead">
+      <a class="brand" href="/"
+        ><img src="/catalogue/logo.png" alt="Hencor Bonsmaras" /><span
+          >HENCOR <small>BONSMARAS</small></span
+        ></a
+      >
+      <nav>
+        <a href="https://hencorbonsmaras.co.za/" target="_blank" rel="noopener"
+          >View catalogue ↗</a
+        ><span class="edition">2026 AUCTION</span>
+      </nav>
+    </header>
+    <main>
+      <div class="intro">
+        <div>
+          <p class="eyebrow" id="eyebrow">FROM OUR HERD TO YOURS</p>
+          <h1 id="page-title">A seat at the auction.</h1>
+          <p id="page-description">
+            Follow the ring, explore the current lot and stay close to the
+            action.
+          </p>
+        </div>
+        <div class="connection">
+          <span class="dot" id="state-dot"></span
+          ><span id="state-status" role="status">Connecting to auction…</span>
+        </div>
+      </div>
+      <div class="rehearsal">
+        <span>MEDIA REHEARSAL</span> Registration and bidding are not open. No
+        purchases can be made on this version.
+      </div>
+      <div id="notice" class="notice" role="alert" hidden></div>
+      <section id="login-panel" class="panel login" hidden>
+        <p class="eyebrow">PRIVATE ACCESS</p>
+        <h2 id="login-title">Sign in</h2>
+        <form id="login-form">
+          <label for="password">Access password</label
+          ><input
+            type="password"
+            id="password"
+            required
+            minlength="16"
+            autocomplete="current-password"
+          /><button type="submit">Sign in</button>
+        </form>
+        <p class="muted">Use the separate credential assigned to this role.</p>
+      </section>
+      <div id="workspace" class="workspace">
+        <section class="watch-column">
+          <div class="screen" id="screen">
+            <img id="fallback-image" alt="Current lot photograph" />
+            <video id="live-video" autoplay playsinline muted hidden></video>
+            <div id="youtube-wrap" hidden><div id="youtube-player"></div></div>
+            <div class="screen-top">
+              <span class="badge" id="visual-label">LOT PREVIEW</span
+              ><span class="badge light" id="screen-lot">LOT 01</span>
+            </div>
+            <div class="screen-bottom">
+              <span id="media-status" role="status"
+                >Join to watch the auction broadcast.</span
+              >
+            </div>
+          </div>
+          <div class="watch-tools">
+            <button id="join">Join rehearsal</button
+            ><button id="enable-audio" class="secondary" hidden>
+              Enable live audio</button
+            ><button id="retry-video" class="secondary" hidden>
+              Retry lot video</button
+            ><label id="image-preference" class="check"
+              ><input type="checkbox" id="prefer-image" /> Save data · image &
+              audio</label
+            >
+          </div>
+          <div id="audio-container"></div>
+          <section id="broadcast-controls" class="panel" hidden>
+            <p class="eyebrow">IPHONE BROADCAST</p>
+            <h2>Your connection to the ring.</h2>
+            <p id="broadcast-status" role="status">
+              Keep Safari open and the screen awake throughout the auction.
+            </p>
+            <div class="meter-row">
+              <label for="mic-level">Microphone</label
+              ><meter id="mic-level" min="0" max="1" value="0"></meter>
+            </div>
+            <div class="button-row">
+              <button id="start-broadcast">Start broadcast</button
+              ><button id="audio-only" class="secondary" disabled>
+                Audio only</button
+              ><button id="stop-broadcast" class="secondary" disabled>
+                Stop
+              </button>
+            </div>
+            <p class="muted">
+              Use the rear camera, connect external power and keep the
+              microphone near the auctioneer. The operator controls when live
+              video returns.
+            </p>
+            <p class="muted" id="wake-status">
+              Screen wake lock will be requested when you start.
+            </p>
+          </section>
+          <section class="panel catalogue-detail">
+            <div class="section-heading">
+              <h2>The current lot</h2>
+              <a id="detail-link" target="_blank" rel="noopener"
+                >Open full size ↗</a
+              >
+            </div>
+            <img
+              id="detail-image"
+              alt="Current lot catalogue details"
+              loading="lazy"
+            />
+          </section>
+        </section>
+        <aside>
+          <section class="panel lot-summary">
+            <p class="eyebrow">IN THE SPOTLIGHT</p>
+            <h2>Lot <span id="lot-number">01</span></h2>
+            <p id="lot-notes">Loading catalogue…</p>
+            <div class="rule"></div>
+            <p class="eyebrow">AUCTION STATUS</p>
+            <h3>Rehearsal in progress</h3>
+            <p class="muted">
+              Bids will appear here once registration and bidding are available.
+            </p>
+            <button disabled class="full">Bidding not open</button>
+            <p class="fine">
+              Recorded lot videos are silent. Live auctioneer audio is played
+              when available.
+            </p>
+          </section>
+          <section id="operator-controls" class="panel" hidden>
+            <p class="eyebrow">OPERATOR CONSOLE</p>
+            <h2>Direct the broadcast.</h2>
+            <label for="lot-select">Current lot</label
+            ><select id="lot-select"></select
+            ><button id="change-lot" class="full">Show selected lot</button
+            ><label>Broadcast mode</label>
+            <div class="mode-buttons">
+              <button data-mode="live">Live camera + audio</button
+              ><button data-mode="audio">Lot video + live audio</button
+              ><button data-mode="recorded">Silent lot video</button
+              ><button data-mode="image">Lot image + live audio</button>
+            </div>
+            <p class="fine">
+              Switching away from live turns off the phone’s camera upload.
+              Start the phone from the private broadcast page.
+            </p>
+            <a href="/broadcast" target="_blank" rel="noopener"
+              >Open broadcast page ↗</a
+            >
+          </section>
+          <section class="panel quiet">
+            <p class="eyebrow">BUILT FOR THE FIELD</p>
+            <p>
+              A weaker signal needn’t take you away from the ring. The current
+              lot stays on screen while the live feed reconnects.
+            </p>
+          </section>
+          <button id="logout" class="text-button" hidden>Sign out</button>
+        </aside>
+      </div>
+    </main>
+    <footer>
+      <span>Hencor Bonsmaras · Quality in every generation.</span
+      ><a href="https://hencorbonsmaras.co.za/">hencorbonsmaras.co.za</a>
+    </footer>
+  </body>
+</html>

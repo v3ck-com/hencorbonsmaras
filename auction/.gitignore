@@ -1,0 +1,8 @@
+/node_modules/
+/web/static/app.js
+/.env
+/.env.*
+!/.env.example
+/test-results/
+/playwright-report/
+/bin/
